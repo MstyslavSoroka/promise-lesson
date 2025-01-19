@@ -179,22 +179,75 @@
 //     console.log(error);
 //   });
 
-raceTimeout = (ms) => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve('Completed in: ' + ms + 'ms');
-    }, ms);
-  })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
+// raceTimeout = (ms) => {
+//   return new Promise((resolve) => {
+//     setTimeout(() => {
+//       resolve('Completed in: ' + ms + 'ms');
+//     }, ms);
+//   })
+//     .then((result) => {
+//       console.log(result);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+// };
 
-raceTimeout(500);
-raceTimeout(1500);
-raceTimeout(2500);
-raceTimeout(3500);
-raceTimeout(4500);
+// raceTimeout(500);
+// raceTimeout(1500);
+// raceTimeout(2500);
+// raceTimeout(3500);
+// raceTimeout(4500);
+
+// const promise1 = Promise.resolve('resolved');
+// const promise2 = Promise.resolve('resolved2');
+// const promise3 = Promise.resolve('resolved3');
+
+// Promise.all([promise1, promise2, promise3])
+//   .then((result) => {
+//     console.log(result);
+//   })
+//   .catch((error) => [console.log(error)]);
+
+const getPopularAnime = new Promise((resolve, reject) => {
+  const popularAnime = ['Bleach', 'Attack Of Titan', 'One Piece'];
+  setTimeout(() => {
+    resolve(popularAnime);
+  }, 2000);
+});
+
+const getNewAnime = new Promise((resolve, reject) => {
+  const newAnime = ['Solo Leveling', 'Blue Exorcist', 'Dr. Stone'];
+  setTimeout(() => {
+    // resolve(newAnime);
+    reject('Error');
+  }, 3000);
+});
+
+const getRandomRecommendation = new Promise((resolve, reject) => {
+  const randAnime = ['Terror in Resonance', 'Cyberpunk Edgerunners', 'Dororo'];
+  setTimeout(() => {
+    resolve(randAnime);
+    // reject('Error');
+  }, 1000);
+});
+
+Promise.race([getPopularAnime, getNewAnime, getRandomRecommendation])
+  .then((result) => {
+    console.log('Ось що ми знайшли для вас!');
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log('На жаль, не вдалося отримати дані з одного джерела');
+    console.log(error);
+  });
+
+Promise.all([getPopularAnime, getNewAnime, getRandomRecommendation])
+  .then((result) => {
+    console.log('Ось що ми знайшли для вас!');
+    console.log(result);
+  })
+  .catch((error) => {
+    console.log('На жаль, не вдалося отримати дані з одного джерела');
+    console.log(error);
+  });
